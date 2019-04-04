@@ -1,20 +1,26 @@
 package com.application.project.android;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FoodDetailsActivity extends AppCompatActivity {
-
+    private boolean updated = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +43,9 @@ public class FoodDetailsActivity extends AppCompatActivity {
 
         final TextView nameTextView = (TextView) findViewById(R.id.nameTextView);
         final TextView caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
-        final TextView nutrientsTextView = (TextView) findViewById(R.id.nutrientsTextView);
+        final TextView carbohydratesTextView = (TextView) findViewById(R.id.carbohydratesTextView);
+        final TextView proteinTextView = (TextView) findViewById(R.id.proteinTextView);
+        final TextView fatTextView = (TextView) findViewById(R.id.fatTextView);
 
         nameTextView.setText(nameTextView.getText().toString() + name);
 
@@ -48,11 +56,137 @@ public class FoodDetailsActivity extends AppCompatActivity {
                 public void run() {
 
                     caloriesTextView.setText(caloriesTextView.getText().toString() + res.getString(0));
-                    nutrientsTextView.setText(nutrientsTextView.getText().toString() + res.getString(1));
+                    carbohydratesTextView.setText(carbohydratesTextView.getText().toString() + res.getString(1));
+                    proteinTextView.setText(proteinTextView.getText().toString() + res.getString(2));
+                    fatTextView.setText(fatTextView.getText().toString() + res.getString(3));
 
                 }
             });
         }
+
+        Button editButton = (Button) findViewById(R.id.editButton);
+
+        editButton.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Context context = FoodDetailsActivity.this;
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                final TextView dialogName = new TextView(context);
+                dialogName.setText("Name");
+                layout.addView(dialogName);
+                final EditText nameEditText = new EditText(context);
+                layout.addView(nameEditText);
+
+               final TextView dialogCalories = new TextView(context);
+               dialogCalories.setText("Calories");
+                layout.addView(dialogCalories);
+                final EditText caloriesEditText = new EditText(context);
+                layout.addView(caloriesEditText);
+
+                final TextView dialogCarbohydrates = new TextView(context);
+                dialogCarbohydrates.setText("Carbohydrates");
+                layout.addView(dialogCarbohydrates);
+                final EditText carbohydratesEditText = new EditText(context);
+                layout.addView(carbohydratesEditText);
+
+                final TextView dialogProtein = new TextView(context);
+                dialogProtein.setText("Protein");
+                layout.addView(dialogProtein);
+                final EditText proteinEditText = new EditText(context);
+                layout.addView(proteinEditText);
+
+                final TextView dialogFat = new TextView(context);
+                dialogFat.setText("Fat");
+                layout.addView(dialogFat);
+                final EditText fatEditText = new EditText(context);
+                layout.addView(fatEditText);
+
+                // dialog.setView(layout); // Again this is a set method, not add
+              /*
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.MATCH_PARENT);
+                editLayout.setLayoutParams(lp);
+*/
+                new AlertDialog.Builder(FoodDetailsActivity.this)
+                        .setTitle("Edit Food")
+                        .setView(layout)
+                        .setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                final DatabaseHelper db = new DatabaseHelper(FoodDetailsActivity.this);
+
+                                final String foodName = getIntent().getStringExtra("Food Name");
+
+
+
+                              //  Button editFoodButton = (Button) findViewById(R.id.editFoodButton);
+
+
+
+                                //editFoodButton.setOnClickListener( new View.OnClickListener() {
+
+                                  //  @Override
+                                   // public void onClick(View v) {
+                                        // final Cursor res = db.retrieve(db.getWritableDatabase(),"username");
+                                        String inputFood = nameEditText.getText().toString();
+                                        String inputCalories = caloriesEditText.getText().toString();
+                                        String inputCarbohydrates = carbohydratesEditText.getText().toString();
+                                        String inputProtein = proteinEditText.getText().toString();
+                                        String inputFat = fatEditText.getText().toString();
+
+                                        db.update(db.getWritableDatabase(),foodName, inputFood,inputCalories,inputCarbohydrates,inputProtein,inputFat);
+                                        Toast.makeText(FoodDetailsActivity.this, "Food Option Updated", Toast.LENGTH_LONG).show();
+
+                                        if(!inputFood.equals(""))
+                                        {
+                                            nameTextView.setText("Name : " + inputFood);
+                                        }
+                                if(!inputCalories.equals(""))
+                                {
+                                    caloriesTextView.setText("Calories : " + inputCalories);
+                                }
+                                if(!inputCarbohydrates.equals(""))
+                                {
+                                    carbohydratesTextView.setText("Carbohydrates : " + inputCarbohydrates);
+                                }
+                                if(!inputProtein.equals(""))
+                                {
+                                    proteinTextView.setText("Protein : " + inputProtein);
+                                }
+                                if(!inputFat.equals(""))
+                                {
+                                    fatTextView.setText("Fat : " + inputFat);
+                                }
+                                        /*
+                                Intent intent = getIntent();
+                                if(!inputFood.equals(""))
+                                     intent.putExtra("Food Name", inputFood);
+
+                                finish();
+                                overridePendingTransition(0, 0);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
+                                    //}
+                                //});
+
+*/
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(FoodDetailsActivity.this, "Canceled", Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     @Override

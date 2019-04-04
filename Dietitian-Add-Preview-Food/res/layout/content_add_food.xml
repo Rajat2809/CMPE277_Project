@@ -50,23 +50,60 @@
 
 
         <TextView
-            android:id="@+id/addNutrients"
+            android:id="@+id/addCarbohydrates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nutrients"
+            android:text="Carbohydrates"
             android:textSize="20sp"
             android:layout_below="@id/addCalories"
             android:layout_marginTop="20dp"/>
 
         <EditText
-            android:id="@+id/addNutrientsEditText"
+            android:id="@+id/addCarbohydratesEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:layout_alignBottom="@id/addNutrients"
-            android:layout_toRightOf="@id/addNutrients"
+            android:layout_alignBottom="@id/addCarbohydrates"
+            android:layout_toRightOf="@id/addCarbohydrates"
             android:layout_below="@id/addCaloriesEditText" />
+
+        <TextView
+            android:id="@+id/addProtein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Protein"
+            android:textSize="20sp"
+            android:layout_below="@id/addCarbohydrates"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/addProteinEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_alignBottom="@id/addProtein"
+            android:layout_toRightOf="@id/addProtein"
+            android:layout_below="@id/addCarbohydratesEditText" />
+        <TextView
+            android:id="@+id/addFat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fat"
+            android:textSize="20sp"
+            android:layout_below="@id/addProtein"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/addFatEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_alignBottom="@id/addFat"
+            android:layout_toRightOf="@id/addFat"
+            android:layout_below="@id/addProteinEditText" />
 
         <Button
             android:id="@+id/addFoodButton"
@@ -75,7 +112,7 @@
             android:text="Add"
             android:textSize="20sp"
 
-            android:layout_below="@id/addNutrients"
+            android:layout_below="@id/addFat"
             android:layout_marginTop="20dp"
             />
 

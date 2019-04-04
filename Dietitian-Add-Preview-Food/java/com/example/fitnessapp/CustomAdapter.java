@@ -59,6 +59,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
         Button deleteButton = (Button)view.findViewById(R.id.deleteButton);
         Button detailsButton = (Button)view.findViewById(R.id.detailsButton);
+        Button editButton = (Button)view.findViewById(R.id.editButton);
 
         deleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -67,7 +68,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
                 db.delete(db.getWritableDatabase(), getItem(position).toString());
                 list.remove(position);
                 notifyDataSetChanged();
-                Toast.makeText(context, "Item Deleted", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Food Deleted", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -82,6 +83,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
                 context.startActivity(intent);
             }
         });
+
 
         return view;
     }

@@ -11,12 +11,7 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/detailsButton"
-        android:text="Delete" />
+
 
     <Button
         android:id="@+id/detailsButton"
@@ -24,5 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/food_item"
         android:text="Details" />
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/detailsButton"
+        android:text="Delete" />
+
 
 </RelativeLayout>

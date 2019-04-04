@@ -35,7 +35,9 @@ public class AddFoodActivity extends AppCompatActivity {
         final DatabaseHelper db = new DatabaseHelper(AddFoodActivity.this);
         final EditText foodEditText = (EditText) findViewById(R.id.addEditText);
         final  EditText caloriesEditText = (EditText) findViewById(R.id.addCaloriesEditText);
-        final  EditText nutrientsEditText = (EditText) findViewById(R.id.addNutrientsEditText);
+        final  EditText carbohydratesEditText = (EditText) findViewById(R.id.addCarbohydratesEditText);
+        final  EditText proteinEditText = (EditText) findViewById(R.id.addProteinEditText);
+        final  EditText fatEditText = (EditText) findViewById(R.id.addFatEditText);
         Button addFoodButton = (Button) findViewById(R.id.addFoodButton);
 
 
@@ -47,8 +49,11 @@ public class AddFoodActivity extends AppCompatActivity {
                 // final Cursor res = db.retrieve(db.getWritableDatabase(),"username");
                 String inputName = foodEditText.getText().toString();
                 String inputCalories = caloriesEditText.getText().toString();
-                String inputNutrients = nutrientsEditText.getText().toString();
-                db.insert(db.getWritableDatabase(),inputName,inputCalories,inputNutrients,"username");
+                String inputCarbohydrates = carbohydratesEditText.getText().toString();
+                String inputProtein = proteinEditText.getText().toString();
+                String inputFat = fatEditText.getText().toString();
+
+                db.insert(db.getWritableDatabase(),inputName,inputCalories,inputCarbohydrates,inputProtein,inputFat,"username");
                 Toast.makeText(AddFoodActivity.this, "Food Option Added For Users", Toast.LENGTH_LONG).show();
 
 

@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE HEALTHYTABLE (NAME VARCHAR(100),CALORIES INT, NUTRIENTS VARCHAR(250), DIETITIAN VARCHAR(100))");
+        db.execSQL("CREATE TABLE HEALTHYTABLE (NAME VARCHAR(100),CALORIES INT, CARBOHYDRATES VARCHAR(100), PROTEIN VARCHAR(100),FAT VARCHAR(100), DIETITIAN VARCHAR(100))");
 
     }
 
@@ -31,10 +31,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void insert (SQLiteDatabase db, String name, String calories, String nutrients, String dietitian)
+    public void insert (SQLiteDatabase db, String name, String calories, String carbohydrates, String protein, String fat, String dietitian)
     {
-        db.execSQL("DROP TABLE HEALTHYTABLE");
-        db.execSQL("CREATE TABLE HEALTHYTABLE (NAME VARCHAR(100),CALORIES INT, NUTRIENTS VARCHAR(250), DIETITIAN VARCHAR(100))");
+       // db.execSQL("DROP TABLE HEALTHYTABLE");
+       // db.execSQL("CREATE TABLE HEALTHYTABLE (NAME VARCHAR(100),CALORIES INT, CARBOHYDRATES VARCHAR(100), PROTEIN VARCHAR(100),FAT VARCHAR(100), DIETITIAN VARCHAR(100))");
 
         //  db.execSQL("DROP TABLE HEALTHYTABLE");
         // db.execSQL("CREATE TABLE HEALTHYTABLE (NAME VARCHAR(100),CALORIES INT, NUTRIENTS VARCHAR(250), DIETITIAN VARCHAR(100))");
@@ -42,8 +42,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("Name",name);
         contentValues.put("Calories",calories);
-        contentValues.put("Nutrients",nutrients);
+        contentValues.put("Carbohydrates",carbohydrates);
+        contentValues.put("Protein",protein);
+        contentValues.put("Fat",fat);
         contentValues.put("Dietitian",dietitian);
+
 
         db.insert("HEALTHYTABLE",null ,contentValues);
 
@@ -52,41 +55,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         while (res.moveToNext()) {
             buffer.append("Name :"+ res.getString(0)+"\n");
             buffer.append("Calories :"+ res.getString(1)+"\n");
-            buffer.append("Nutrients :"+ res.getString(2)+"\n");
-            buffer.append("Dietitian :"+ res.getString(3)+"\n");
+            buffer.append("Carbohydrates :"+ res.getString(2)+"\n");
+            buffer.append("Protein :"+ res.getString(3)+"\n");
+            buffer.append("Fat :"+ res.getString(4)+"\n");
+            buffer.append("Dietitian :"+ res.getString(5)+"\n");
         }
 
     }
 
-    public void update (SQLiteDatabase db, String item, String details)
+    public void update (SQLiteDatabase db, String currentname, String name, String calories, String carbohydrates, String protein, String fat)
     {
-       /* Log.d("Test", item);
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put("Details",details);
 
-        db.update("TODO",contentValues ,"ITEM = ?",new String[] { item });
-
-
-        Cursor res = db.rawQuery("select * from TODO",null);
-        StringBuffer buffer = new StringBuffer();
-        while (res.moveToNext()) {
-            buffer.append("Item :"+ res.getString(0)+"\n");
-            buffer.append("Details :"+ res.getString(1)+"\n");
-
+        if(!name.equals("")) {
+            contentValues.put("Name", name);
         }
+        if(!calories.equals(""))
+            contentValues.put("Calories",calories);
+        if(!carbohydrates.equals(""))
+            contentValues.put("Carbohydrates",carbohydrates);
+        if(!protein.equals(""))
+            contentValues.put("Protein",protein);
+        if(!fat.equals(""))
+            contentValues.put("Fat",fat);
 
-*/
+        db.update("HEALTHYTABLE",contentValues ,"NAME = ?",new String[] { currentname });
+
+
+
     }
 
-    public void delete (SQLiteDatabase db, String item)
+    public void delete (SQLiteDatabase db, String name)
     {
 
-        // db.delete("TODO" ,"ITEM = ?",new String[] { item });
+        db.delete("HEALTHYTABLE" ,"NAME = ?",new String[] { name });
 
     }
     public Cursor retrieve (SQLiteDatabase db, String dietitian)
     {
-        Cursor res = db.rawQuery("select * from HEALTHYTABLE ",null);
+        Cursor res = db.rawQuery("select NAME from HEALTHYTABLE ",null);
 
 
         return res;
@@ -94,8 +102,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor retrieveDetails (SQLiteDatabase db, String name, String dietitian)
     {
-        Cursor res = db.rawQuery("select CALORIES,NUTRIENTS from HEALTHYTABLE WHERE NAME = ? AND DIETITIAN = ?",new String[] { name,dietitian });
+        Cursor res = db.rawQuery("select CALORIES,CARBOHYDRATES, PROTEIN, FAT from HEALTHYTABLE WHERE NAME = ? AND DIETITIAN = ?",new String[] { name,dietitian });
 
         return res;
     }
+
+
 }
