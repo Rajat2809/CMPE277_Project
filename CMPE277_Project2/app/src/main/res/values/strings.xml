@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">FitnessApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_dietitian__home_">Dietitian_Home_Activity</string>
+    <string name="title_activity_dietitian_home">DietitianHome</string>
+
+    <string name="action_add_food">Add Food Options</string>
+    <string name="action_preview_food">Preview Food Options</string>
+    <string name="action_home">Home</string>
+    <string name="title_activity_add_food">AddFood</string>
+    <string name="title_activity_preview_food">PreviewFood</string>
+    <string name="title_activity_food_details">FoodDetails</string>
+
+</resources>
