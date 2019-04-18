@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i("PrintLog", "MainActivity#onCreate");
-        FirebaseApp.initializeApp(this);
+        FirebaseApp.initializeApp(MainActivity.this);
         validate();
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             //Start user activity
             else
             {
-                Intent dataIntent = new Intent(MainActivity.this, DietitianHome.class);
+                Intent dataIntent = new Intent(MainActivity.this, menu.class);
                 dataIntent.putExtra("email", email.getText().toString().trim());
                 startActivity(dataIntent);
             }
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     //Start user activity
                     else
                     {
-                        Intent dataIntent = new Intent(MainActivity.this, DietitianHome.class);
+                        Intent dataIntent = new Intent(MainActivity.this, menu.class);
                         dataIntent.putExtra("email", email);
                         startActivity(dataIntent);
                     }
