@@ -47,6 +47,8 @@ public class Search extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String userIntent = intent.getStringExtra("userIntent");
+        final String email = intent.getStringExtra("email");
+
 
         materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
@@ -109,6 +111,7 @@ public class Search extends AppCompatActivity {
                 Intent addItem = new Intent(Search.this, com.example.fitnessapp.addItem.class);
                 addItem.putExtra("selectedItem",foodItem);
                 addItem.putExtra("userIntent",userIntent);
+                addItem.putExtra("email",email);
                 Search.this.startActivity(addItem);
 
             }

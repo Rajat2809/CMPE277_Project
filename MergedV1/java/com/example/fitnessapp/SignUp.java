@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,8 @@ public class SignUp extends AppCompatActivity {
     private Button btnSignUp;
     private TextView tvLogin;
    private FirebaseAuth firebaseAuth;
+   private CheckBox chkAdmin;
+
 
 
   //  DBHandler dbHandler;
@@ -49,16 +52,18 @@ public class SignUp extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
                                 FirebaseUser user = firebaseAuth.getCurrentUser();
+                                if(chkAdmin.isChecked()) {
+                                    UserProfileChangeRequest adminprofileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName("admin").build();
 
-                                UserProfileChangeRequest adminprofileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName("admin").build();
 
-                                user.updateProfile(adminprofileUpdates);
+                                    user.updateProfile(adminprofileUpdates);
+                                }else {
+                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                            .setDisplayName("notadmin").build();
 
-                                /*UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                        .setDisplayName("notadmin").build();
-
-                                user.updateProfile(profileUpdates);*/
+                                    user.updateProfile(profileUpdates);
+                                }
 
 
                                 String retval = sendUserData();
@@ -94,6 +99,7 @@ public class SignUp extends AppCompatActivity {
         pass = (EditText)findViewById(R.id.etPass);
         btnSignUp = (Button)findViewById(R.id.btnUpdate);
         tvLogin = (TextView)findViewById(R.id.tvLogin);
+        chkAdmin = (CheckBox)findViewById(R.id.chkAdmin);
     }
     private String sendUserData(){
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

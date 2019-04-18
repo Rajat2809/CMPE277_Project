@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".addItem"></activity>
+        <activity android:name=".MealPlan"></activity>
+        <activity android:name=".addItem" />
         <activity android:name=".menu" />
         <activity android:name=".Search" />
         <activity android:name=".MainActivity">
@@ -30,6 +31,9 @@
         <activity android:name=".PreviewFood" />
         <activity android:name=".FoodDetails" />
         <activity android:name=".SignUp" />
+        <receiver android:name=".NotificationPublisher"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

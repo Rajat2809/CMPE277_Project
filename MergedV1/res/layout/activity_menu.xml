@@ -50,7 +50,7 @@
 
     <TextView
         android:id="@+id/textbrkfstCalRec"
-        android:layout_width="186dp"
+        android:layout_width="173dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -67,7 +67,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="327dp"
-        android:layout_marginEnd="61dp"
+        android:layout_marginEnd="80dp"
         android:text="@string/lunch_recommendation"
         android:textSize="12sp"
         android:textStyle="bold" />
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="80dp"
         android:layout_marginBottom="22dp"
         android:text="@string/snack_recommendation"
         android:textSize="12sp"
@@ -90,10 +90,62 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="74dp"
-        android:layout_marginBottom="163dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="162dp"
         android:text="@string/dinner_recommendation"
         android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonBreakfastPlan"
+        android:layout_width="112dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="165dp"
+        android:layout_marginEnd="267dp"
+        android:text="Current Plan"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonLunchPlan"
+        android:layout_width="112dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="323dp"
+        android:text="CURRENT PLAN"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonDinnerplan"
+        android:layout_width="112dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="29dp"
+        android:layout_marginBottom="154dp"
+        android:text="CURRENT PLAN"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonSnackPlan"
+        android:layout_width="112dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="11dp"
+        android:text="CURRENT PLAN"
+        android:textAlignment="center"
+        android:textSize="8sp"
         android:textStyle="bold" />
 
 

@@ -6,7 +6,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class menu extends AppCompatActivity {
 
@@ -20,18 +29,29 @@ public class menu extends AppCompatActivity {
     private TextView txtDinnerCal;
     private TextView txtSnackCal;
 
+    private Button currentBreakfastPlan;
+    private Button currentLunchPlan;
+    private Button currentDinnerPlan;
+    private Button currentSnackPlan;
+
+    private String email = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         setupUI();
 
+        Intent intent = getIntent();
+        email = intent.getStringExtra("email");
+        System.out.println("Email=========="+email);
 
         breakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent breakfastIntent = new Intent(menu.this, Search.class);
                 breakfastIntent.putExtra("userIntent",getResources().getString(R.string.breakfast_menu_option));
+                breakfastIntent.putExtra("email",email);
                 startActivity(breakfastIntent) ;
             }
         });
@@ -41,6 +61,7 @@ public class menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent breakfastIntent = new Intent(menu.this, Search.class);
                 breakfastIntent.putExtra("userIntent",getResources().getString(R.string.lunch_menu_option));
+                breakfastIntent.putExtra("email",email);
                 startActivity(breakfastIntent) ;
             }
         });
@@ -50,6 +71,7 @@ public class menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent breakfastIntent = new Intent(menu.this, Search.class);
                 breakfastIntent.putExtra("userIntent",getResources().getString(R.string.dinner_menu_option));
+                breakfastIntent.putExtra("email",email);
                 startActivity(breakfastIntent) ;
             }
         });
@@ -59,7 +81,36 @@ public class menu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent breakfastIntent = new Intent(menu.this, Search.class);
                 breakfastIntent.putExtra("userIntent",getResources().getString(R.string.snack_menu_option));
+                breakfastIntent.putExtra("email",email);
                 startActivity(breakfastIntent) ;
+            }
+        });
+
+        currentBreakfastPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMealPlan(getResources().getString(R.string.breakfast_menu_option),email);
+            }
+        });
+
+        currentLunchPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMealPlan(getResources().getString(R.string.lunch_menu_option),email);
+            }
+        });
+
+        currentDinnerPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMealPlan(getResources().getString(R.string.dinner_menu_option),email);
+            }
+        });
+
+        currentSnackPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMealPlan(getResources().getString(R.string.snack_menu_option),email);
             }
         });
 
@@ -77,6 +128,11 @@ public class menu extends AppCompatActivity {
         txtLunchCal = (TextView) findViewById(R.id.textlnchCalRec);
         txtSnackCal = (TextView) findViewById(R.id.textsnackCalRec);
         txtDinnerCal = (TextView) findViewById(R.id.textdinnerCalRec);
+
+        currentBreakfastPlan = (Button)findViewById(R.id.buttonBreakfastPlan);
+        currentLunchPlan = (Button)findViewById(R.id.buttonLunchPlan);
+        currentDinnerPlan = (Button)findViewById(R.id.buttonDinnerplan);
+        currentSnackPlan = (Button)findViewById(R.id.buttonSnack);
     }
 
     private void verifyIntent()
@@ -105,4 +161,13 @@ public class menu extends AppCompatActivity {
 
 
     }
+
+    private void showMealPlan(String mealPlan, String emailAddress)
+    {
+        Intent intent = new Intent(menu.this,MealPlan.class);
+        intent.putExtra("mealPlan",mealPlan);
+        intent.putExtra("email",emailAddress);
+        menu.this.startActivity(intent);
+    }
+
 }

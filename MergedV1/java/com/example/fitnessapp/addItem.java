@@ -6,6 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.client.Firebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class addItem extends AppCompatActivity {
 
@@ -21,7 +26,10 @@ public class addItem extends AppCompatActivity {
     private TextView textCholestrolValue;
     private TextView textPottasiumValue;
 
+    Firebase firebase;
+
     private Button addToDiary;
+    private String selectedItem;
 
 
     @Override
@@ -29,10 +37,11 @@ public class addItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+        firebase = new Firebase("https://healthapp-de69e.firebaseio.com");
         setupUI();
 
         Intent intent = getIntent();
-        String selectedItem = intent.getStringExtra("selectedItem");
+        selectedItem = intent.getStringExtra("selectedItem");
         itemSelected.setText(selectedItem);
 
 
@@ -62,8 +71,11 @@ public class addItem extends AppCompatActivity {
     }
 
     private void addToDiary(){
+
         Intent intent = getIntent();
         String userIntent = intent.getStringExtra("userIntent");
+        String email = intent.getStringExtra("email");
+        addFoodItems(userIntent,email);
 
         Intent menuIntent = new Intent(addItem.this,menu.class);
 
@@ -88,6 +100,15 @@ public class addItem extends AppCompatActivity {
             }
         }
         addItem.this.startActivity(menuIntent);
+    }
+
+    private void addFoodItems(String mealType, String email)
+    {
+        Firebase myChild = firebase.child("foodItem");
+
+        FoodItem foodItem = new FoodItem(email,mealType,selectedItem,"71.4","1.2","1","0.8","0.6","0.2","200","155","45");
+        myChild.child(firebase.push().getKey()).setValue(foodItem);
+        Toast.makeText(this,"FoodItem Added",Toast.LENGTH_LONG).show();
     }
 
 }
