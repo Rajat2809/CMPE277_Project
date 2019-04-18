@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".menu">
+
+    <Button
+        android:id="@+id/buttonBreakfast"
+        android:layout_width="330dp"
+        android:layout_height="79dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/breakfast2" />
+
+
+    <Button
+        android:id="@+id/buttonLunch"
+        android:layout_width="325dp"
+        android:layout_height="79dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="241dp"
+        android:background="@drawable/lunch1" />
+
+    <Button
+        android:id="@+id/buttonDinner"
+        android:layout_width="319dp"
+        android:layout_height="78dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="390dp"
+        android:background="@drawable/dinner1" />
+
+    <Button
+        android:id="@+id/buttonSnack"
+        android:layout_width="310dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="535dp"
+        android:layout_marginBottom="45dp"
+        android:background="@drawable/snack1" />
+
+    <TextView
+        android:id="@+id/textbrkfstCalRec"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="171dp"
+        android:text="@string/breakfast_recommendation"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textlnchCalRec"
+        android:layout_width="176dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="327dp"
+        android:layout_marginEnd="61dp"
+        android:text="@string/lunch_recommendation"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textsnackCalRec"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="22dp"
+        android:text="@string/snack_recommendation"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textdinnerCalRec"
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="163dp"
+        android:text="@string/dinner_recommendation"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
