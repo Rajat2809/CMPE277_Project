@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".AddFood"
+    tools:showIn="@layout/activity_add_food"
+    android:layout_marginTop="50dp" >
+    <!--   android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginStart="8dp"
+       android:layout_marginLeft="8dp"
+       android:layout_marginTop="8dp"
+       android:layout_marginEnd="8dp"
+       android:layout_marginRight="8dp"
+       android:layout_marginBottom="8dp"
+       android:ems="10"
+       android:hint="Email"
+       android:inputType="textEmailAddress"
+       android:textColor="@color/colorPlain"
+       android:textColorHint="@color/colorPlain"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.313"-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp" >
+
+
+        <EditText
+            android:id="@+id/addEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="15"
+            android:hint="Food Name"
+            android:layout_marginTop="100dp"
+
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/colorGray"
+            android:inputType="textPersonName"
+
+
+            />
+
+
+        <EditText
+            android:id="@+id/addCaloriesEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="15"
+            android:inputType="textPersonName"
+            android:hint="Calories"
+
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/colorGray"
+            android:layout_below="@id/addEditText"
+
+            />
+
+
+
+        <EditText
+            android:id="@+id/addCarbohydratesEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="15"
+            android:hint="Carbohydrates"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="@color/colorGray"
+            android:layout_marginLeft="50dp"
+            android:inputType="textPersonName"
+            android:layout_below="@id/addCaloriesEditText" />
+
+
+        <EditText
+            android:id="@+id/addProteinEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="15"
+            android:hint="Protein"
+            android:textColor="@color/colorBlack"
+
+            android:layout_marginLeft="50dp"
+            android:textColorHint="@color/colorGray"
+            android:inputType="textPersonName"
+            android:layout_below="@id/addCarbohydratesEditText" />
+
+
+        <EditText
+            android:id="@+id/addFatEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="15"
+            android:inputType="textPersonName"
+
+            android:hint="Fat"
+            android:textColor="@color/colorBlack"
+
+            android:layout_marginLeft="50dp"
+            android:textColorHint="@color/colorGray"
+            android:layout_below="@id/addProteinEditText" />
+
+        <Button
+            android:id="@+id/addFoodButton"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:textSize="20sp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_below="@id/addFatEditText"
+            android:textColor="@color/colorPlain"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="115dp"
+            />
+
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
+
+
