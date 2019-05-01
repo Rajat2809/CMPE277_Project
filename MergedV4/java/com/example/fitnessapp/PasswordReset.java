@@ -23,7 +23,7 @@ public class PasswordReset extends AppCompatActivity {
         setContentView(R.layout.activity_password_reset);
         etEmailReset = (EditText)findViewById(R.id.etEmailReset);
         String userEmail =getIntent().getStringExtra("email");
-        if(!userEmail.isEmpty()){
+        if(userEmail!=null && !userEmail.isEmpty()){
             etEmailReset.setText(userEmail);
         }
         firebaseAuth = FirebaseAuth.getInstance();

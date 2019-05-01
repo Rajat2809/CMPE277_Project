@@ -103,7 +103,14 @@ public class AddFood extends AppCompatActivity {
         final  EditText caloriesEditText = (EditText) findViewById(R.id.addCaloriesEditText);
         final  EditText carbohydratesEditText = (EditText) findViewById(R.id.addCarbohydratesEditText);
         final  EditText proteinEditText = (EditText) findViewById(R.id.addProteinEditText);
+        final  EditText categoryEditText = (EditText) findViewById(R.id.addCategoryText);
         final  EditText fatEditText = (EditText) findViewById(R.id.addFatEditText);
+        final  EditText fiberEditText = (EditText) findViewById(R.id.addFiberEditText);
+        final  EditText sugarEditText = (EditText) findViewById(R.id.addSugarEditText);
+        final  EditText satFatEditText = (EditText) findViewById(R.id.addSatFatEditText);
+        final  EditText unSatFatEditText = (EditText) findViewById(R.id.addUnSatFatEditText);
+        final  EditText cholestrolEditText = (EditText) findViewById(R.id.addOtherEditText);
+        final  EditText pottasiumEditText = (EditText) findViewById(R.id.addOtherPottasiumEditText);
         Button addFoodButton = (Button) findViewById(R.id.addFoodButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -133,11 +140,18 @@ public class AddFood extends AppCompatActivity {
                 Log.i("PrintLog", "database.child(food): " + database.child("food"));
                 DatabaseReference dbreference = database.child("food").push();
                 //Log.i("PrintLog", "database.child(food) pushed! Received id: " + id);
-                food.setname(foodEditText.getText().toString());
-                food.setcalories(caloriesEditText.getText().toString());
+                food.setName(foodEditText.getText().toString());
+                food.setCalories(caloriesEditText.getText().toString());
                 food.setCarbohydrates(carbohydratesEditText.getText().toString());
                 food.setProtein(proteinEditText.getText().toString());
                 food.setFat(fatEditText.getText().toString());
+                food.setCategory(categoryEditText.getText().toString());
+                food.setFiber(fiberEditText.getText().toString());
+                food.setSugar(sugarEditText.getText().toString());
+                food.setSatFat(satFatEditText.getText().toString());
+                food.setUnSatFat(unSatFatEditText.getText().toString());
+                food.setOtherCholestrol(cholestrolEditText.getText().toString());
+                food.setOtherPottasium(pottasiumEditText.getText().toString());
                 food.setUserUid(firebaseAuth.getUid());
                 food.setUsername_food(firebaseAuth.getCurrentUser().getEmail() + "_" + foodEditText.getText().toString());
                 food.setUsername(firebaseAuth.getCurrentUser().getEmail());
@@ -171,7 +185,7 @@ public class AddFood extends AppCompatActivity {
 
                 Log.i("PrintLog", "database set value called");
                 //database.child("food").child(id).setValue(food);
-                Toast.makeText(AddFood.this, "Food " + food.getname() + " Added", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddFood.this, "Food " + food.getName() + " Added", Toast.LENGTH_LONG).show();
                // finish();
 /*
                 String inputName = foodEditText.getText().toString();

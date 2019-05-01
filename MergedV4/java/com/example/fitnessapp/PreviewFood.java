@@ -159,7 +159,7 @@ public class PreviewFood extends AppCompatActivity {
                         @Override
                         public void run() {
                            // Log.i("PrintLog",food.getname());
-                            adapter.addItem(food.getname());
+                            adapter.addItem(food.getName());
                             adapter.notifyDataSetChanged();
 
                         }

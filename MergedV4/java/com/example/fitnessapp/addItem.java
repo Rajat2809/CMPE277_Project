@@ -20,6 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class addItem extends AppCompatActivity {
 
     private TextView itemSelected;
@@ -40,6 +42,8 @@ public class addItem extends AppCompatActivity {
     private Button addToDiary;
     private String selectedItem;
     private Food selectedFood;
+    private HashMap<String,Food> foodHashMap = new HashMap<>();
+    private String date;
 
 
     @Override
@@ -52,8 +56,19 @@ public class addItem extends AppCompatActivity {
 
         Intent intent = getIntent();
         selectedItem = intent.getStringExtra("selectedItem");
-        itemSelected.setText(selectedItem);
+        date = intent.getStringExtra("date");
+        foodHashMap = (HashMap<String, Food>) intent.getSerializableExtra("foodMap");
+        if(foodHashMap!=null) {
+            System.out.println("FoodMap::" + foodHashMap.size());
+            selectedFood = foodHashMap.get(selectedItem);
+        }
 
+        /*System.out.println("SelectedItem::"+selectedItem);
+        System.out.println("date::"+date);
+        System.out.println("SelectedFood::"+selectedFood);
+*/
+        itemSelected.setText(selectedItem);
+        loadUI(selectedFood);
 
         addToDiary.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,12 +170,25 @@ public class addItem extends AppCompatActivity {
         addToDiary = findViewById(R.id.buttonDiary);
     }
 
+    private void loadUI(Food food)
+    {
+        textCarbValue.setText(food.getCarbohydrates());
+        textProteinValue.setText(food.getProtein());
+        textFiberValue.setText(food.getFiber());
+        textSugarValue.setText(food.getSugar());
+        textFatValue.setText(food.getFat());
+        textSatFatValue.setText(food.getSatFat());
+        textUnSatFatValue.setText(food.getUnSatFat());
+        textCholestrolValue.setText(food.getOtherCholestrol());
+        textPottasiumValue.setText(food.getOtherPottasium());
+    }
+
     private void addToDiary(){
 
         Intent intent = getIntent();
         String userIntent = intent.getStringExtra("userIntent");
         String email = intent.getStringExtra("email");
-        addFoodItems(userIntent,email);
+        addFoodItems(selectedFood,email,date);
 
         Intent menuIntent = new Intent(addItem.this,menu.class);
 
@@ -187,13 +215,13 @@ public class addItem extends AppCompatActivity {
         addItem.this.startActivity(menuIntent);
     }
 
-    private void addFoodItems(String mealType, String email)
+    private void addFoodItems(Food food, String email,String date)
     {
 
 
         Firebase myChild = firebase.child("foodItem");
 
-        FoodItem foodItem = new FoodItem(email,mealType,selectedItem,"71.4","1.2","1","0.8","0.6","0.2","200","155","45");
+        FoodItem foodItem = new FoodItem(email, food, date);
         myChild.child(firebase.push().getKey()).setValue(foodItem);
         Toast.makeText(this,"FoodItem Added",Toast.LENGTH_LONG).show();
     }

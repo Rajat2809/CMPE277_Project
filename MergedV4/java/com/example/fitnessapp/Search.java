@@ -1,8 +1,10 @@
 package com.example.fitnessapp;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +18,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -28,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class Search extends AppCompatActivity {
@@ -38,8 +44,9 @@ public class Search extends AppCompatActivity {
     List<String> lstFound = new ArrayList<>();
     private ArrayList<String> foodarray = new ArrayList<>();
     List<String> lstSource = new ArrayList<>();
-    int lowCalorieLimit = 100, lowCarbLimit = 7, highProteinLimit = 7, lowFatLimit = 4;
-   /* String[] lstSource = {
+    HashMap<String,Food> foodMap = new HashMap<>();
+    int lowCalorieLimit = 100, lowCarbLimit = 7, highProteinLimit = 4, lowFatLimit = 4;
+    /* String[] lstSource = {
             "Brown Bread",
             "Wheat Bread",
             "Milk Bread",
@@ -48,6 +55,10 @@ public class Search extends AppCompatActivity {
             "Greek yogurt",
             "Full Fat yogurt"
     };*/
+    private Button mDisplayDate;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private static final String TAG = "SearchActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +76,40 @@ public class Search extends AppCompatActivity {
         Button filterButton = (Button) findViewById(R.id.filterButton);
         loadUI();
 
+        //Date Picker
+        mDisplayDate = (Button) findViewById(R.id.tvDate);
+
+        mDisplayDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        Search.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
+
+                String date = month + "/" + day + "/" + year;
+                    mDisplayDate.setText(date);
+            }
+        };
+
+
+
         Intent intent = getIntent();
         final String userIntent = intent.getStringExtra("userIntent");
         final String email = intent.getStringExtra("email");
@@ -78,10 +123,11 @@ public class Search extends AppCompatActivity {
                 lstSource = new ArrayList<>();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("food");
 
-                ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
+                        System.out.println("====Search======");
                         // Result will be holded Here
                         for (DataSnapshot dsp : dataSnapshot.getChildren()) {
                             Log.i("PrintLog", "Food item " + dsp.getValue());
@@ -89,10 +135,10 @@ public class Search extends AppCompatActivity {
                             //boolean calorie = true, fat= true, protein = true, carbs = true;
                             boolean add = true;
                             Log.i("PrintLog", "lowCalorieCheck" +lowCalorieCheck.isChecked());
-                            if(lowCalorieCheck.isChecked() && !food.getcalories().equals("") && Integer.parseInt(food.getcalories())>lowCalorieLimit) {
+                            if(lowCalorieCheck.isChecked() && !food.getCalories().equals("") && Integer.parseInt(food.getCalories())>lowCalorieLimit) {
 
                                 //  calorie = false;
-                                Log.i("PrintLog", "lowCalorieCheckLoop" +food.getcalories());
+                                Log.i("PrintLog", "lowCalorieCheckLoop" +food.getCalories());
                                 Log.i("PrintLog", "lowCalorieCheckLoop" +lowCalorieLimit);
                                 add = false;
                             }
@@ -113,8 +159,9 @@ public class Search extends AppCompatActivity {
                             }
                             Log.i("PrintLog", "add" +add);
                             //if(calorie && fat && carbs && protein)
-                            if(add)
-                                lstSource.add(food.getname()); //add result into array list
+                            if(add && food.getCategory().toLowerCase().equalsIgnoreCase(userIntent.toString().toLowerCase()))
+                                lstSource.add(food.getName()); //add result into array list
+                                foodMap.put(food.getName(),food);
 
                         }
                     }
@@ -128,10 +175,10 @@ public class Search extends AppCompatActivity {
 
             });
 
-        TabLayout tablayout = (TabLayout)findViewById(R.id.usertabs);
-        tablayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener(){
+       /* TabLayout tablayout = (TabLayout)findViewById(R.id.usertabs);
+        tablayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener(){*/
 
-            @Override
+           /* @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.d("PrintLog", tab.getText().toString());
                 Context context = Search.this;
@@ -176,17 +223,21 @@ public class Search extends AppCompatActivity {
 
                 context.startActivity(intent);
             }
-        });
+        });*/
 
 
         materialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
+                System.out.println("====SearchViewShown======"+lstSource.size() );
+                ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1,lstSource);
 
+                lstView.setAdapter(adapter);
             }
 
             @Override
             public void onSearchViewClosed() {
+                System.out.println("====SearchViewClosed======");
                // ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1,lstSource);
                 ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1,lstSource);
 
@@ -246,6 +297,8 @@ public class Search extends AppCompatActivity {
                 addItem.putExtra("selectedItem",foodItem);
                 addItem.putExtra("userIntent",userIntent);
                 addItem.putExtra("email",email);
+                addItem.putExtra("foodMap",foodMap);
+                addItem.putExtra("date",mDisplayDate.getText().toString());
                 Search.this.startActivity(addItem);
 
             }

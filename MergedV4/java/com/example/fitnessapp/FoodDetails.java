@@ -90,6 +90,7 @@ public class FoodDetails extends AppCompatActivity {
         final TextView carbohydratesTextView = (TextView) findViewById(R.id.carbohydratesTextView);
         final TextView proteinTextView = (TextView) findViewById(R.id.proteinTextView);
         final TextView fatTextView = (TextView) findViewById(R.id.fatTextView);
+        final TextView categoryTextView = (TextView) findViewById(R.id.categoryTextView);
 
         nameTextView.setText("Name: " + name);
 
@@ -102,10 +103,17 @@ public class FoodDetails extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     final Food food =   data.getValue(Food.class);
-                    caloriesTextView.setText("Calories: " + food.getcalories());
+                    caloriesTextView.setText("Calories: " + food.getCalories());
                     carbohydratesTextView.setText("Carbohydrates: " + food.getCarbohydrates());
                     proteinTextView.setText("Protein: " + food.getFat());
                     fatTextView.setText("Fat: "+ food.getFat());
+                    categoryTextView.setText("Category: "+ food.getCategory());
+                    fiberTextView.setText("Fiber: "+ food.getFiber());
+                    sugarTextView.setText("Sugars: "+ food.getSugar());
+                    satFatTextView.setText("Saturated Fat: "+ food.getSatFat());
+                    unSatFatTextView.setText("Unsaturated Fat: "+ food.getUnSatFat());
+                    cholestrolTextView.setText("Cholestrol: "+ food.getOtherCholestrol());
+                    pottasiumlestrolTextView.setText("Pottasium: "+ food.getOtherPottasium());
 
                 }
 
@@ -174,6 +182,50 @@ public class FoodDetails extends AppCompatActivity {
                 final EditText fatEditText = new EditText(context);
                 layout.addView(fatEditText);
 
+                final TextView dialogCategory = new TextView(context);
+                dialogCategory.setText("Category");
+                layout.addView(dialogCategory);
+                final EditText categoryEditText = new EditText(context);
+                layout.addView(categoryEditText);
+
+                final TextView dialogFiber = new TextView(context);
+                dialogFiber.setText("Fiber");
+                layout.addView(dialogFiber);
+                final EditText FiberEditText = new EditText(context);
+                layout.addView(FiberEditText);
+
+                final TextView dialogSugars = new TextView(context);
+                dialogSugars.setText("Sugars");
+                layout.addView(dialogSugars);
+                final EditText SugarsEditText = new EditText(context);
+                layout.addView(SugarsEditText);
+
+                final TextView dialogSatFat = new TextView(context);
+                dialogSatFat.setText("Saturated Fat");
+                layout.addView(dialogSatFat);
+                final EditText SatfatEditText = new EditText(context);
+                layout.addView(SatfatEditText);
+
+                final TextView dialogUnSatFat = new TextView(context);
+                dialogUnSatFat.setText("Unsaturated Fat");
+                layout.addView(dialogUnSatFat);
+                final EditText UnSatfatEditText = new EditText(context);
+                layout.addView(UnSatfatEditText);
+
+                final TextView dialogCholestrol = new TextView(context);
+                dialogCholestrol.setText("Cholestrol");
+                layout.addView(dialogCholestrol);
+                final EditText cholestrolEditText = new EditText(context);
+                layout.addView(cholestrolEditText);
+
+                final TextView dialogPottasium = new TextView(context);
+                dialogPottasium.setText("Pottasium");
+                layout.addView(dialogPottasium);
+                final EditText pottasiumEditText = new EditText(context);
+                layout.addView(pottasiumEditText);
+
+
+
                 // dialog.setView(layout); // Again this is a set method, not add
               /*
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -206,6 +258,14 @@ public class FoodDetails extends AppCompatActivity {
                                         final String inputCarbohydrates = carbohydratesEditText.getText().toString();
                                         final String inputProtein = proteinEditText.getText().toString();
                                         final String inputFat = fatEditText.getText().toString();
+                                        final String inputFiber = FiberEditText.getText().toString();
+                                        final String inputSugar = SugarsEditText.getText().toString();
+                                        final String inputSatFat = SatfatEditText.getText().toString();
+                                        final String inputUnSatFat = UnSatfatEditText.getText().toString();
+                                        final String inputCholestrol = cholestrolEditText.getText().toString();
+                                        final String inputCategory = categoryEditText.getText().toString();
+                                        final String inputPottasium = pottasiumEditText.getText().toString();
+
                                         Log.i("PrintLog", "Username_Food" + firebaseAuth.getCurrentUser().getEmail() + "_" + name);
                                         //db.update(db.getWritableDatabase(),foodName, inputFood,inputCalories,inputCarbohydrates,inputProtein,inputFat);
                                         database.orderByChild("username_food").equalTo(firebaseAuth.getCurrentUser().getEmail() + "_" + name).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -214,17 +274,31 @@ public class FoodDetails extends AppCompatActivity {
                                                 Log.i("PrintLog", "Found food with name " + name);
                                                 Food food = new Food();
                                                 if (!inputFood.equals("")) {
-                                                    food.setname(inputFood.toString());
+                                                    food.setName(inputFood.toString());
                                                     food.setUsername_food(firebaseAuth.getCurrentUser().getEmail() + "_" + inputFood);
                                                 }
                                                 if (!inputCalories.equals(""))
-                                                    food.setcalories(inputCalories.toString());
+                                                    food.setCalories(inputCalories.toString());
                                                 if(!inputCarbohydrates.equals(""))
                                                     food.setCarbohydrates(inputCarbohydrates);
                                                 if(!inputProtein.equals(""))
                                                     food.setProtein(inputProtein);
                                                 if(!inputFat.equals(""))
                                                     food.setFat(inputFat);
+                                                if(!inputCategory.equals(""))
+                                                    food.setCategory(inputCategory);
+                                                if(!inputFiber.equals(""))
+                                                    food.setFiber(inputFiber);
+                                                if(!inputSugar.equals(""))
+                                                    food.setSugar(inputSugar);
+                                                if(!inputSatFat.equals(""))
+                                                    food.setSatFat(inputSatFat);
+                                                if(!inputUnSatFat.equals(""))
+                                                    food.setUnSatFat(inputUnSatFat);
+                                                if(!inputCholestrol.equals(""))
+                                                    food.setOtherCholestrol(inputCholestrol);
+                                                if(!inputPottasium.equals(""))
+                                                    food.setOtherPottasium(inputPottasium);
 
                                                 food.setUsername(firebaseAuth.getCurrentUser().getEmail());
                                                 food.setUserUid(firebaseAuth.getUid());
@@ -285,6 +359,34 @@ public class FoodDetails extends AppCompatActivity {
                                 if(!inputFat.equals(""))
                                 {
                                     fatTextView.setText("Fat : " + inputFat);
+                                }
+                                if(!inputFiber.equals(""))
+                                {
+                                    fiberTextView.setText("Fiber : " + inputFiber);
+                                }
+                                if(!inputSugar.equals(""))
+                                {
+                                    sugarTextView.setText("Sugar : " + inputSugar);
+                                }
+                                if(!inputSatFat.equals(""))
+                                {
+                                    satFatTextView.setText("Saturated Fat : " + inputSatFat);
+                                }
+                                if(!inputUnSatFat.equals(""))
+                                {
+                                    unSatFatTextView.setText("Unsaturated Fat : " + inputUnSatFat);
+                                }
+                                if(!inputCholestrol.equals(""))
+                                {
+                                    cholestrolTextView.setText("Cholestrol : " + inputCholestrol);
+                                }
+                                if(!inputPottasium.equals(""))
+                                {
+                                    pottasiumlestrolTextView.setText("Pottasium : " + inputPottasium);
+                                }
+                                if(!inputCategory.equals(""))
+                                {
+                                    categoryTextView.setText("Category : " + inputCategory);
                                 }
                                         /*
                                 Intent intent = getIntent();

@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:background="@drawable/main2">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FitnessApp"
-        android:textSize="40sp"
-        android:fontFamily="sans-serif-thin"
-        android:textColor="@color/colorPlain"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.113"/>
+
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="wrap_content"
@@ -32,11 +19,12 @@
         android:layout_marginBottom="8dp"
 
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:textColor="@color/colorPlain"
         android:textColorHint="@color/colorPlain"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,10 +43,11 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:textSize="25sp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:textColorHint="@color/colorPlain"
         android:inputType="textPassword"
         android:textColor="@color/colorPlain"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -117,7 +106,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Forgot Password"
+        android:text="@string/fpassword"
 
         android:textColor="@color/colorPlain"
         app:layout_constraintBottom_toBottomOf="parent"

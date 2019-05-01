@@ -4,8 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/ThemeOverlay.AppCompat"
     tools:context=".menu">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
     <Button
         android:id="@+id/buttonBreakfast"
         android:layout_width="330dp"
@@ -14,7 +27,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="33dp"
         android:layout_marginTop="84dp"
-        android:background="@drawable/breakfast2" />
+        android:background="@drawable/roundbreakfast" />
 
 
     <Button
@@ -25,7 +38,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="33dp"
         android:layout_marginTop="241dp"
-        android:background="@drawable/lunch1" />
+        android:background="@drawable/roundedlunch" />
 
     <Button
         android:id="@+id/buttonDinner"
@@ -35,7 +48,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="33dp"
         android:layout_marginTop="390dp"
-        android:background="@drawable/dinner1" />
+        android:background="@drawable/roundeddinner" />
 
     <Button
         android:id="@+id/buttonSnack"
@@ -46,7 +59,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="535dp"
         android:layout_marginBottom="45dp"
-        android:background="@drawable/snack1" />
+        android:background="@drawable/roundedsnack" />
 
     <TextView
         android:id="@+id/textbrkfstCalRec"
