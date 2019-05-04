@@ -112,9 +112,9 @@ public class Search extends AppCompatActivity {
 
         Intent intent = getIntent();
         final String userIntent = intent.getStringExtra("userIntent");
-        final String email = intent.getStringExtra("email");
         final CustomAdapter ca = new CustomAdapter(foodarray,Search.this);
         firebaseAuth = FirebaseAuth.getInstance();
+        final String email = firebaseAuth.getCurrentUser().getEmail();
         final ArrayAdapter adapter = new ArrayAdapter(Search.this, android.R.layout.simple_list_item_1,lstSource);
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("food");
@@ -328,7 +328,7 @@ public class Search extends AppCompatActivity {
                     System.out.println("===========Search from Filtered List::===============" + lstFound.get(position));
                     foodItem = lstFound.get(position);
                 }
-                else {
+                else if(lstSource!=null && lstSource.size()>0){
                     System.out.println("===========Search from Original List::===============" + lstSource.get(position));
                     foodItem = lstSource.get(position);
                 }

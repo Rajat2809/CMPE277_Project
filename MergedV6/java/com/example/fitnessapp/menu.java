@@ -48,9 +48,10 @@ public class menu extends AppCompatActivity {
         setupUI();
 
         Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-        System.out.println("Email=========="+email);
+        /*email = intent.getStringExtra("email");*/
         firebaseAuth = FirebaseAuth.getInstance();
+        email = firebaseAuth.getCurrentUser().getEmail();
+        System.out.println("Email=========="+email);
         TabLayout tablayout = (TabLayout)findViewById(R.id.usertabs);
         tablayout.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener(){
 
@@ -187,7 +188,7 @@ public class menu extends AppCompatActivity {
         currentBreakfastPlan = (Button)findViewById(R.id.buttonBreakfastPlan);
         currentLunchPlan = (Button)findViewById(R.id.buttonLunchPlan);
         currentDinnerPlan = (Button)findViewById(R.id.buttonDinnerplan);
-        currentSnackPlan = (Button)findViewById(R.id.buttonSnack);
+        currentSnackPlan = (Button)findViewById(R.id.buttonSnackPlan);
     }
 
     private void verifyIntent()
