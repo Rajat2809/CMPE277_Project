@@ -5,6 +5,7 @@ public class FoodItem {
     String email;
     Food food;
     String date;
+    String email_food_date;
 
     public FoodItem(){
 
@@ -38,5 +39,13 @@ public class FoodItem {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getEmail_food_date() {
+        return email_food_date;
+    }
+
+    public void setEmail_food_date(String email_food_date) {
+        this.email_food_date = email_food_date;
     }
 }

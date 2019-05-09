@@ -30,6 +30,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +52,11 @@ public class MealPlan extends AppCompatActivity {
 
     private Button mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private TextView recommendation;
+    private DonutProgress donutProgress;
+    TextView calConsumed;
+    private Integer cals = new Integer(0);
+    private Integer totalCalRecommendation = new Integer(0);
 
 
     @Override
@@ -58,12 +64,33 @@ public class MealPlan extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_plan);
 
+        recommendation = (TextView) findViewById(R.id.mealCalRec);
+
         Intent intent = getIntent();
         final String mealPlan = intent.getStringExtra("mealPlan");
         //itemList = intent.getStringArrayListExtra("itemList");
 
+        switch (mealPlan){
+            case "breakfast":
+                recommendation.setText("Breakfast Calorie Recommendation:  300-400 CALS");
+                totalCalRecommendation = 400;
+                break;
+            case "lunch":
+                recommendation.setText("Lunch Calorie Recommendation: 500-700 CALS");
+                totalCalRecommendation = 700;
+                break;
+            case "dinner":
+                recommendation.setText("Dinner Calorie Recommendation: 500-700 CALS");
+                totalCalRecommendation = 700;
+                break;
+            case "snack":
+                recommendation.setText("Snack Calorie Recommendation: 200 CALS");
+                totalCalRecommendation =200;
+                break;
+        }
+
         final ListView listView = (ListView)findViewById(R.id.mealPlan);
-        CustomAdapter adapter = new CustomAdapter(itemList,MealPlan.this);
+        CustomMealPlanAdapter adapter = new CustomMealPlanAdapter(itemList,MealPlan.this);
 
         Firebase.setAndroidContext(this);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -100,7 +127,8 @@ public class MealPlan extends AppCompatActivity {
                 dateList.add(date);
                 mDisplayDate.setText(date);
                // final CustomAdapter adapter = new CustomAdapter(new ArrayList<String>(),MealPlan.this);
-                final CustomAdapter adapter = new CustomAdapter(itemList,MealPlan.this);
+                final CustomMealPlanAdapter adapter = new CustomMealPlanAdapter(itemList,MealPlan.this);
+                adapter.setSelectedDate(date);
                 listView.setAdapter(adapter);
                 displayCurrentPlan(mealPlan,adapter,listView,date);
             }
@@ -122,7 +150,8 @@ public class MealPlan extends AppCompatActivity {
                 }
                 else if(tab.getText().toString().equals("Share")) {
                     //Log.d("PrintLog", adapter.getItem(0).toString());
-                    String message = "My " + mealPlan + " meal plan for " + dateList.get(0);
+                    String message = "My " + mealPlan + " meal plan for " + dateList.get(0)+"\n";
+                    System.out.println("ItemList Size::"+itemList.size());
                     for(int i = 0 ; i< itemList.size(); i++)
                     {
                         message += "\n" + itemList.get(i).toString();
@@ -219,7 +248,7 @@ public class MealPlan extends AppCompatActivity {
                     context.startActivity(intent);
                 }
                 else if(tab.getText().toString().equals("Share")) {
-                    String message = "My Meal Plan for " + dateList.get(0);
+                    String message = "My Meal Plan for " + dateList.get(0) + "\n";
                     for (int i = 0; i < itemList.size(); i++) {
                         message += "\n" + itemList.get(i).toString();
                     }
@@ -306,11 +335,13 @@ public class MealPlan extends AppCompatActivity {
     }
 
 
-    public void displayCurrentPlan(final String mealPlan,final CustomAdapter adapter,final ListView listView, final String date)
+    public void displayCurrentPlan(final String mealPlan,final CustomMealPlanAdapter adapter,final ListView listView, final String date)
     {
         firebase.child("foodItem").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                adapter.reset();
+                cals = new Integer(0);
                 for (com.firebase.client.DataSnapshot snapshot:dataSnapshot.getChildren())
                 {
                     final FoodItem foodItem = snapshot.getValue(FoodItem.class);
@@ -325,8 +356,12 @@ public class MealPlan extends AppCompatActivity {
                                         firebaseUser.getEmail().toLowerCase().equalsIgnoreCase(foodItem.getEmail().toLowerCase()) &&
                                         date.toLowerCase().equalsIgnoreCase(foodItem.getDate())) {
                                     Log.i("PrintLog", foodItem.getFood().getName());
+                                    cals+=Integer.parseInt(foodItem.getFood().getCalories());
+                                    setCalories(cals);
+                                    System.out.println("Cals Consumned::"+String.valueOf(cals));
                                     System.out.println("=====Value Found After Condition=======" + foodItem.getFood().getName());
-                                    adapter.addItem(foodItem.getFood().getName());
+                                    itemList.add(foodItem.getFood().getName() + "     " +foodItem.getFood().getCalories()+" CALS");
+                                    adapter.addItem(foodItem.getFood().getName() + "     " +foodItem.getFood().getCalories()+" CALS");
                                     adapter.notifyDataSetChanged();
                                 }
                             }
@@ -370,6 +405,21 @@ public class MealPlan extends AppCompatActivity {
         Intent intent = new Intent(this,NotificationPublisher.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
         alarmManager.setRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+
+    }
+
+    public void setCalories(Integer cals){
+        calConsumed = (TextView) findViewById(R.id.mealCalCons);
+        donutProgress = (DonutProgress)findViewById(R.id.donut_progress);
+        if (cals>totalCalRecommendation) {
+            calConsumed.setText("You are " + String.valueOf( cals - totalCalRecommendation) + " CALS ahead of Recommendaion");
+            donutProgress.setProgress((100));
+
+        }
+        else {
+            calConsumed.setText("You have consumed " + String.valueOf(cals) + " CALS");
+            donutProgress.setProgress((cals*100)/totalCalRecommendation);
+        }
 
     }
 }

@@ -190,6 +190,7 @@ public class addItem extends AppCompatActivity {
         Intent intent = getIntent();
         String userIntent = intent.getStringExtra("userIntent");
         String email = intent.getStringExtra("email");
+        selectedFood.setCategory(userIntent);
         addFoodItems(selectedFood,email,date);
 
         Intent menuIntent = new Intent(addItem.this,menu.class);
@@ -224,6 +225,7 @@ public class addItem extends AppCompatActivity {
         Firebase myChild = firebase.child("foodItem");
 
         FoodItem foodItem = new FoodItem(email, food, date);
+        foodItem.setEmail_food_date(email+"_"+food.getName()+"_"+date);
         myChild.child(firebase.push().getKey()).setValue(foodItem);
         Toast.makeText(this,"FoodItem Added",Toast.LENGTH_LONG).show();
     }
